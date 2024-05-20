@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate,login
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from . models import NPK_Experimentales, NPK_Teoricos, cargar_dato, repetir_dato, eliminar_dato,bajar_datos, obtener_datos
-from datetime import datetime
+from datetime import datetime,timedelta
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 # from .models import SensorData
@@ -74,7 +74,7 @@ def upload_page_data(request):
                     eliminar_dato(NPK_Teoricos,int(Last_Nro))
                 else:
                     repetir_dato(NPK_Teoricos,request,int(Last_Nro)-1)
-        return HttpResponseRedirect('http://127.0.0.1:8000/get_data/{}'.format(Cant_Base))
+        return HttpResponseRedirect('https://django-render-app-rc48.onrender.com/get_data/{}'.format(Cant_Base))
 
     if request.method == "GET":
         return HttpResponse("Peticion GET PAGE DATA", status=200)
