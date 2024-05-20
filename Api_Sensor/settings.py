@@ -1,22 +1,18 @@
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'i6f0zw)-9$c5s2)jmiwu6ae@khyon!#**$k2%+=b2$pxzvghe4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = os.environ.get("DEBUG","False").lower() == "True"
 
 
-# Application definition
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -62,26 +58,26 @@ WSGI_APPLICATION = 'Api_Sensor.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Base_NPK',
-        'USER': 'postgres',
-        'PASSWORD': 'Sebas123456',
-        'HOST': 'localhost',  # O la dirección IP de tu servidor PostgreSQL
-        'PORT': '5432',       # El puerto predeterminado de PostgreSQL es 5432
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'BaseNPK',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Sebas123456',
+#         'HOST': 'localhost',  # O la dirección IP de tu servidor PostgreSQL
+#         'PORT': '5432',       # El puerto predeterminado de PostgreSQL es 5432
+#     }s
+# }
+
+database_url=os.environ.get("DATABASE_URL")
+DATABASES["default"] = dj_database_url.parse(database_url)
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -113,3 +109,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'static'),
 )
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
