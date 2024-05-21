@@ -21,11 +21,11 @@ class NPK_Teoricos(models.Model):
     class Meta:
         app_label = 'Api_Sensor'
 
-def cargar_dato(clase,request,fecha=None,Last_Nro=None):
-    V_teo_1 = request.POST.get('V_teo_1')
-    V_teo_2 = request.POST.get('V_teo_2')
-    V_teo_3 = request.POST.get('V_teo_3')
-    if Last_Nro is None: Last_Nro=request.POST.get('Muestra')
+def cargar_dato(clase,V_teo_1,V_teo_2,V_teo_3,fecha=None,Last_Nro=None):
+    # V_teo_1 = request.POST.get('V_teo_1')
+    # V_teo_2 = request.POST.get('V_teo_2')
+    # V_teo_3 = request.POST.get('V_teo_3')
+    # if Last_Nro is None: Last_Nro=request.POST.get('Muestra')
 
     print("En Cargar Nro={}, v1={}, v2={}, v3={}".format(Last_Nro,V_teo_1,V_teo_2,V_teo_3))
 

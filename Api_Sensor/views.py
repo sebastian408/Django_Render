@@ -43,6 +43,9 @@ def login_view(request):
 def upload_sensor_data(request):
     if request.method == 'POST':
         Last_Nro = NPK_Teoricos.objects.filter(Valid=True).latest('Nro').Nro
+        V_teo_1 = request.POST.get('V_teo_1')
+        V_teo_2 = request.POST.get('V_teo_2')
+        V_teo_3 = request.POST.get('V_teo_3')
         if request.POST.get('Valid')=='True':
             cargar_dato(NPK_Experimentales, request,fecha = datetime.now()-timedelta(hours=5),Last_Nro=Last_Nro)
         else:
@@ -64,16 +67,20 @@ def upload_page_data(request):
         Cant_Base=request.POST.get("Cant_Base")
         Cant_teo = NPK_Teoricos.objects.filter(Valid=True).count()
         Cant_Exp = NPK_Experimentales.objects.filter(Valid=True).count()
-        
+        V_teo_1 = request.POST.get('V_teo_1')
+        V_teo_2 = request.POST.get('V_teo_2')
+        V_teo_3 = request.POST.get('V_teo_3')
+        Nro= request.POST.GET('Muestra')
+
         if request.POST.get('Valid')=='True':
-            if Cant_teo == Cant_Exp:
-                cargar_dato(NPK_Teoricos, request)
+            # if Cant_teo == Cant_Exp:
+                cargar_dato(NPK_Teoricos,V_teo_1,V_teo_2,V_teo_3,Last_Nro=Nro)
         else:
                 Last_Nro=request.POST.get('Muestra')
                 if request.POST.get('Delete')=='True':
-                    eliminar_dato(NPK_Teoricos,int(Last_Nro))
+                    eliminar_dato(NPK_Teoricos,int(Nro))
                 else:
-                    repetir_dato(NPK_Teoricos,request,int(Last_Nro)-1)
+                    repetir_dato(NPK_Teoricos,request,int(Nro)-1)
         return HttpResponseRedirect('https://django-render-app-rc48.onrender.com/get_data/{}'.format(Cant_Base))
 
     if request.method == "GET":
