@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from . models import NPK_Experimentales, NPK_Teoricos, cargar_dato, repetir_dato, eliminar_dato,bajar_datos, obtener_datos
 from datetime import datetime,timedelta
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect 
 import json
 # from .models import SensorData
 
@@ -64,29 +64,28 @@ def upload_sensor_data(request):
 
         return HttpResponse("Ok", status=200)
 
-@csrf_exempt  # Solo si no estás utilizando el middleware CSRF en tu proyecto
-def upload_sensor_data(request):
+@csrf_exempt
+def upload_page_data(request):
     if request.method == 'POST':
-        try:
-            # Intenta procesar los datos como JSON
-            data = json.loads(request.body.decode('utf-8'))
-            is_json = True
-        except json.JSONDecodeError:
-            # Si no se pueden procesar como JSON, usa los datos de POST
-            data = request.POST
-            is_json = False
-
-        Last_Nro = NPK_Teoricos.objects.filter(Valid=True).latest('Nro').Nro
+        Cant_Base=request.POST.get("Cant_Base")
+        Cant_teo = NPK_Teoricos.objects.filter(Valid=True).count()
+        Cant_Exp = NPK_Experimentales.objects.filter(Valid=True).count()
         
-        if (is_json and data.get('Valid') == 'True') or (not is_json and request.POST.get('Valid') == 'True'):
-            cargar_dato(NPK_Experimentales, data, fecha=datetime.now() - timedelta(hours=5), Last_Nro=Last_Nro)
+        if request.POST.get('Valid')=='True':
+            if Cant_teo == Cant_Exp:
+                cargar_dato(NPK_Teoricos, request)
         else:
-            if (is_json and data.get('Delete') == 'True') or (not is_json and request.POST.get('Delete') == 'True'):
-                eliminar_dato(NPK_Experimentales, Last_Nro)
-            else:
-                repetir_dato(NPK_Experimentales, data, Last_Nro, fecha=datetime.now() - timedelta(hours=5))
+                Last_Nro=request.POST.get('Muestra')
+                if request.POST.get('Delete')=='True':
+                    eliminar_dato(NPK_Teoricos,int(Last_Nro))
+                else:
+                    repetir_dato(NPK_Teoricos,request,int(Last_Nro)-1)
+        return HttpResponseRedirect('https://django-render-app-rc48.onrender.com/get_data/{}'.format(Cant_Base))
 
-        return HttpResponse("Ok", status=200)
+    if request.method == "GET":
+        return HttpResponse("Peticion GET PAGE DATA", status=200)
+    else:
+        return HttpResponse("Error en la solicitud", status=400)
 
 @csrf_exempt
 def get_sensor_data(request,Cant_Base=1):  
