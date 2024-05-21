@@ -21,53 +21,55 @@ class NPK_Teoricos(models.Model):
     class Meta:
         app_label = 'Api_Sensor'
 
-def cargar_dato(clase,request,fecha=None,Last_Nro=None):
-    V_teo_1 = request.POST.get('V_teo_1')
-    V_teo_2 = request.POST.get('V_teo_2')
-    V_teo_3 = request.POST.get('V_teo_3')
-    if Last_Nro is None: Last_Nro=request.POST.get('Muestra')
+def cargar_dato(clase, data, fecha=None, Last_Nro=None):
+    V_teo_1 = data.get('V_teo_1')
+    V_teo_2 = data.get('V_teo_2')
+    V_teo_3 = data.get('V_teo_3')
+    if Last_Nro is None: Last_Nro = data.get('Muestra')
 
-    print("En Cargar Nro={}, v1={}, v2={}, v3={}".format(Last_Nro,V_teo_1,V_teo_2,V_teo_3))
+    print("En Cargar Nro={}, v1={}, v2={}, v3={}".format(Last_Nro, V_teo_1, V_teo_2, V_teo_3))
 
     V1 = None if V_teo_1 == 'Null' else float(V_teo_1)
     V2 = None if V_teo_2 == 'Null' else float(V_teo_2)
     V3 = None if V_teo_3 == 'Null' else float(V_teo_3)
-    print("En Cargar 2 Nro={}, v1={}, v2={}, v3={}".format(Last_Nro,V1,V2,V3))
+    print("En Cargar 2 Nro={}, v1={}, v2={}, v3={}".format(Last_Nro, V1, V2, V3))
 
-    data={'Nro':int(Last_Nro),
-          'V_teo_1':V1,
-          'V_teo_2':V2,
-          'V_teo_3':V3,}
+    data_dict = {
+        'Nro': int(Last_Nro),
+        'V_teo_1': V1,
+        'V_teo_2': V2,
+        'V_teo_3': V3,
+    }
     if fecha is not None: 
-        print("Fecha= ",fecha)
-        data['Fecha'] = fecha
+        print("Fecha= ", fecha)
+        data_dict['Fecha'] = fecha
 
-    instancia = clase(**data)
+    instancia = clase(**data_dict)
     instancia.save()   
 
-def repetir_dato(clase,request,Last_Nro,fecha=None):
-    V_teo_1 = request.POST.get('V_teo_1')
-    V_teo_2 = request.POST.get('V_teo_2')
-    V_teo_3 = request.POST.get('V_teo_3')
+def repetir_dato(clase, data, Last_Nro, fecha=None):
+    V_teo_1 = data.get('V_teo_1')
+    V_teo_2 = data.get('V_teo_2')
+    V_teo_3 = data.get('V_teo_3')
 
-    print("En repetir Nro={}, v1={}, v2={}, v3={}".format(Last_Nro,V_teo_1,V_teo_2,V_teo_3))
+    print("En repetir Nro={}, v1={}, v2={}, v3={}".format(Last_Nro, V_teo_1, V_teo_2, V_teo_3))
 
     V1 = None if V_teo_1 == 'Null' else float(V_teo_1)
     V2 = None if V_teo_2 == 'Null' else float(V_teo_2)
     V3 = None if V_teo_3 == 'Null' else float(V_teo_3)
-    print("En repetir 2 Nro={}, v1={}, v2={}, v3={}".format(Last_Nro,V1,V2,V3))
-    instancia=clase.objects.get(Nro=Last_Nro,Valid=True)
-    instancia.V_teo_1= V1
-    instancia.V_teo_2= V2
-    instancia.V_teo_3= V3
+    print("En repetir 2 Nro={}, v1={}, v2={}, v3={}".format(Last_Nro, V1, V2, V3))
+    instancia = clase.objects.get(Nro=Last_Nro, Valid=True)
+    instancia.V_teo_1 = V1
+    instancia.V_teo_2 = V2
+    instancia.V_teo_3 = V3
 
     if fecha is not None: 
-        instancia.fecha=fecha
+        instancia.fecha = fecha
     instancia.save()
 
-def eliminar_dato(clase,Last_Nro):
-    instancia=clase.objects.filter(Valid=True).get(Nro=int(Last_Nro))
-    instancia.Valid= False
+def eliminar_dato(clase, Last_Nro):
+    instancia = clase.objects.filter(Valid=True).get(Nro=int(Last_Nro))
+    instancia.Valid = False
     instancia.save()
 
 def bajar_datos(instancias):
