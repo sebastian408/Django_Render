@@ -62,7 +62,7 @@ def repetir_dato(clase,V_teo_1,V_teo_2,V_teo_3,Last_Nro,fecha=None):
     instancia.V_teo_3= V3
 
     if fecha is not None: 
-        instancia.fecha=fecha
+        instancia.Fecha=fecha
     instancia.save()
 
 def eliminar_dato(clase,Last_Nro):
