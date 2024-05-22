@@ -51,6 +51,8 @@ def upload_sensor_data(request):
         Valid = data.get('Valid')
         Delete = data.get('Valid')
 
+        print("Nro: {}  V1: {} V2: {} V3: {} Valid: {} Delete: {} ".format(Nro,V_teo_1,V_teo_2,V_teo_3,Valid,Delete))
+
         Valid = True if Valid == 'True' else False
         Delete = True if Delete == 'True' else False
 
