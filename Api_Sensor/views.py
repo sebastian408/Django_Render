@@ -70,7 +70,7 @@ def upload_page_data(request):
         V_teo_1 = request.POST.get('V_teo_1')
         V_teo_2 = request.POST.get('V_teo_2')
         V_teo_3 = request.POST.get('V_teo_3')
-        Nro= request.POST.GET('Muestra')
+        Nro= request.POST.get('Muestra')
 
         if request.POST.get('Valid')=='True':
             # if Cant_teo == Cant_Exp:
