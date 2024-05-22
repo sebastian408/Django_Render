@@ -58,7 +58,7 @@ def upload_sensor_data(request):
         Delete = True if Delete == 'True' else False
 
 
-        if Valid=='True':
+        if Valid:
             cargar_dato(NPK_Experimentales, V_teo_1,V_teo_2,V_teo_3,fecha = datetime.now()-timedelta(hours=5),Last_Nro=Nro)
         else:
             if Delete=='True':
