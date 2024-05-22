@@ -48,8 +48,9 @@ def upload_sensor_data(request):
         V_teo_1 = data.get('V_teo_1')
         V_teo_2 = data.get('V_teo_2')
         V_teo_3 = data.get('V_teo_3')
+        Delete = data.get('Delete')
         Valid = data.get('Valid')
-        Delete = data.get('Valid')
+        
 
         print("Nro: {}  V1: {} V2: {} V3: {} Valid: {} Delete: {} ".format(Nro,V_teo_1,V_teo_2,V_teo_3,Valid,Delete))
 
