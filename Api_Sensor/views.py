@@ -66,7 +66,7 @@ def upload_sensor_data(request):
         return HttpResponse("Ok",status=200)
 
     if request.method == "GET":
-        return HttpResponse("Peticion GET PAGE DATA", status=200)
+        return HttpResponse("Peticion GET SENSOR DATA", status=200)
     else:
         return HttpResponse("Error en la solicitud", status=400)
 
