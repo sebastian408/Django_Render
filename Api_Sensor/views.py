@@ -7,6 +7,7 @@ from . models import NPK_Experimentales, NPK_Teoricos, cargar_dato, repetir_dato
 from datetime import datetime,timedelta
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+import json
 # from .models import SensorData
 
 
@@ -42,17 +43,21 @@ def login_view(request):
 @csrf_exempt
 def upload_sensor_data(request):
     if request.method == 'POST':
-        Last_Nro = NPK_Teoricos.objects.filter(Valid=True).latest('Nro').Nro
-        V_teo_1 = request.POST.get('V_teo_1')
-        V_teo_2 = request.POST.get('V_teo_2')
-        V_teo_3 = request.POST.get('V_teo_3')
-        if request.POST.get('Valid')=='True':
-            cargar_dato(NPK_Experimentales, request,fecha = datetime.now()-timedelta(hours=5),Last_Nro=Last_Nro)
+        Nro = NPK_Teoricos.objects.filter(Valid=True).latest('Nro').Nro
+        data = json.loads(request.body.decode('utf-8'))
+        V_teo_1 = data.get('V_teo_1')
+        V_teo_2 = data.get('V_teo_2')
+        V_teo_3 = data.get('V_teo_3')
+        Valid = data.get('Valid')
+        Delete = data.get('Valid')
+
+        if Valid=='True':
+            cargar_dato(NPK_Experimentales, V_teo_1,V_teo_2,V_teo_3,fecha = datetime.now()-timedelta(hours=5),Last_Nro=Nro)
         else:
-            if request.POST.get('Delete')=='True':
-                eliminar_dato(NPK_Experimentales,Last_Nro)
+            if Delete=='True':
+                eliminar_dato(NPK_Experimentales,Nro)
             else:
-                repetir_dato(NPK_Experimentales,request,Last_Nro,fecha=datetime.now()-timedelta(hours=5))
+                repetir_dato(NPK_Experimentales, V_teo_1,V_teo_2,V_teo_3,Nro,fecha=datetime.now()-timedelta(hours=5))
 
         return HttpResponse("Ok",status=200)
 

@@ -45,10 +45,10 @@ def cargar_dato(clase,V_teo_1,V_teo_2,V_teo_3,fecha=None,Last_Nro=None):
     instancia = clase(**data)
     instancia.save()   
 
-def repetir_dato(clase,request,Last_Nro,fecha=None):
-    V_teo_1 = request.POST.get('V_teo_1')
-    V_teo_2 = request.POST.get('V_teo_2')
-    V_teo_3 = request.POST.get('V_teo_3')
+def repetir_dato(clase,V_teo_1,V_teo_2,V_teo_3,Last_Nro,fecha=None):
+    # V_teo_1 = request.POST.get('V_teo_1')
+    # V_teo_2 = request.POST.get('V_teo_2')
+    # V_teo_3 = request.POST.get('V_teo_3')
 
     print("En repetir Nro={}, v1={}, v2={}, v3={}".format(Last_Nro,V_teo_1,V_teo_2,V_teo_3))
 
