@@ -44,6 +44,8 @@ def login_view(request):
 def upload_sensor_data(request):
     if request.method == 'POST':
         Nro = NPK_Teoricos.objects.filter(Valid=True).latest('Nro').Nro
+        Cant_teo = NPK_Teoricos.objects.filter(Valid=True).count()
+        Cant_Exp = NPK_Experimentales.objects.filter(Valid=True).count()
         data = json.loads(request.body.decode('utf-8'))
         V_teo_1 = data.get('V_teo_1')
         V_teo_2 = data.get('V_teo_2')
@@ -56,12 +58,13 @@ def upload_sensor_data(request):
 
 
         if Valid:
-            cargar_dato(NPK_Experimentales, V_teo_1,V_teo_2,V_teo_3,fecha = datetime.now()-timedelta(hours=5),Last_Nro=Nro)
+            if Cant_teo == Cant_Exp-1:
+                cargar_dato(NPK_Experimentales, V_teo_1,V_teo_2,V_teo_3,fecha = datetime.now()-timedelta(hours=5),Last_Nro=Nro)
         else:
             if Delete:
                 eliminar_dato(NPK_Experimentales,Nro)
             else:
-                repetir_dato(NPK_Experimentales, V_teo_1,V_teo_2,V_teo_3,Nro,fecha=datetime.now()-timedelta(hours=5))
+                repetir_dato(NPK_Experimentales, V_teo_1,V_teo_2,V_teo_3,Nro,fecha=datetime.now())
 
         return HttpResponse("Ok",status=200)
 
@@ -82,7 +85,7 @@ def upload_page_data(request):
         Nro= request.POST.get('Muestra')
 
         if request.POST.get('Valid')=='True':
-            # if Cant_teo == Cant_Exp:
+            if Cant_teo == Cant_Exp:
                 cargar_dato(NPK_Teoricos,V_teo_1,V_teo_2,V_teo_3,Last_Nro=Nro)
         else:
                 Last_Nro=request.POST.get('Muestra')
