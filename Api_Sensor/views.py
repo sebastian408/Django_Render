@@ -89,7 +89,7 @@ def upload_page_data(request):
                 if request.POST.get('Delete')=='True':
                     eliminar_dato(NPK_Teoricos,int(Nro))
                 else:
-                    repetir_dato(NPK_Teoricos,request,int(Nro)-1)
+                    repetir_dato(NPK_Teoricos,V_teo_1,V_teo_2,V_teo_3,Last_Nro=int(Nro)-1)
         return HttpResponseRedirect('https://django-render-app-rc48.onrender.com/get_data/{}'.format(Cant_Base))
 
     if request.method == "GET":
