@@ -54,13 +54,8 @@ def upload_sensor_data(request):
         Delete = data.get('Delete')
         Valid = data.get('Valid')
 
-        print(" En sensor data Nro: {}  V1: {} V2: {} V3: {} Valid: {} Delete: {} ".format(Nro,V_teo_1,V_teo_2,V_teo_3,Valid,Delete))
-        print("Datos_Teo: {} ,Datos_Exp: {}".format(Cant_teo, Cant_Exp))
-
         if Valid:
-            print("Flag1")
             if Cant_teo -1 == Cant_Exp:
-                print("Flag2")
                 cargar_dato(NPK_Experimentales, V_teo_1,V_teo_2,V_teo_3,fecha = datetime.now()-timedelta(hours=5),Last_Nro=Nro)
         else:
             if Delete:
@@ -143,7 +138,6 @@ def get_sensor_data(request,Cant_Base=1):
             Tabla_Exp = {key: value[-Cant:] for key, value in datos_Exp.items()}
         except:
             Tabla_Exp = datos_Teo
-        print(datos_Teo)
         return render(request, 'get_data.html', {
             'Last_Obj': last_Teo,
             'Datos_Teo':Tabla_Teo,
