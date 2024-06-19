@@ -59,7 +59,7 @@ def upload_sensor_data(request):
 
         if Valid:
             print("Flag1")
-            if Cant_teo == Cant_Exp-1:
+            if Cant_teo -1 == Cant_Exp:
                 print("Flag2")
                 cargar_dato(NPK_Experimentales, V_teo_1,V_teo_2,V_teo_3,fecha = datetime.now()-timedelta(hours=5),Last_Nro=Nro)
         else:
