@@ -46,6 +46,7 @@ def upload_sensor_data(request):
         Nro = NPK_Teoricos.objects.filter(Valid=True).latest('Nro').Nro
         Cant_teo = NPK_Teoricos.objects.filter(Valid=True).count()
         Cant_Exp = NPK_Experimentales.objects.filter(Valid=True).count()
+
         data = json.loads(request.body.decode('utf-8'))
         V_teo_1 = data.get('V_teo_1')
         V_teo_2 = data.get('V_teo_2')
@@ -54,7 +55,7 @@ def upload_sensor_data(request):
         Valid = data.get('Valid')
         
 
-        print("Nro: {}  V1: {} V2: {} V3: {} Valid: {} Delete: {} ".format(Nro,V_teo_1,V_teo_2,V_teo_3,Valid,Delete))
+        print(" En sensor data Nro: {}  V1: {} V2: {} V3: {} Valid: {} Delete: {} ".format(Nro,V_teo_1,V_teo_2,V_teo_3,Valid,Delete))
 
 
         if Valid:
