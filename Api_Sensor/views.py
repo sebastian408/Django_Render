@@ -54,11 +54,14 @@ def upload_sensor_data(request):
         Delete = data.get('Delete')
         Valid = data.get('Valid')
         
+        print("Tipo Valid: ",type(Valid))
+        print("Tipo Delete: ",type(Delete))
+
 
         print(" En sensor data Nro: {}  V1: {} V2: {} V3: {} Valid: {} Delete: {} ".format(Nro,V_teo_1,V_teo_2,V_teo_3,Valid,Delete))
 
 
-        if str(Valid) =='True' :
+        if Valid =='True' :
             if Cant_teo == Cant_Exp-1:
                 cargar_dato(NPK_Experimentales, V_teo_1,V_teo_2,V_teo_3,fecha = datetime.now()-timedelta(hours=5),Last_Nro=Nro)
         else:
