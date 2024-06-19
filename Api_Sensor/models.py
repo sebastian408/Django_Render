@@ -32,6 +32,7 @@ def cargar_dato(clase,V_teo_1,V_teo_2,V_teo_3,fecha=None,Last_Nro=None):
     V1 = None if V_teo_1 == 'Null' else float(V_teo_1)
     V2 = None if V_teo_2 == 'Null' else float(V_teo_2)
     V3 = None if V_teo_3 == 'Null' else float(V_teo_3)
+    
     print("En Cargar 2 Nro={}, v1={}, v2={}, v3={}".format(Last_Nro,V1,V2,V3))
 
     data={'Nro':int(Last_Nro),

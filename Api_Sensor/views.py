@@ -58,11 +58,11 @@ def upload_sensor_data(request):
         print(" En sensor data Nro: {}  V1: {} V2: {} V3: {} Valid: {} Delete: {} ".format(Nro,V_teo_1,V_teo_2,V_teo_3,Valid,Delete))
 
 
-        if Valid:
+        if Valid=='True':
             if Cant_teo == Cant_Exp-1:
                 cargar_dato(NPK_Experimentales, V_teo_1,V_teo_2,V_teo_3,fecha = datetime.now()-timedelta(hours=5),Last_Nro=Nro)
         else:
-            if Delete:
+            if Delete=='True':
                 eliminar_dato(NPK_Experimentales,Nro)
             else:
                 repetir_dato(NPK_Experimentales, V_teo_1,V_teo_2,V_teo_3,Nro,fecha=datetime.now())
