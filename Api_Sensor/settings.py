@@ -1,5 +1,6 @@
 import os
 import dj_database_url
+from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -76,7 +77,7 @@ DATABASES = {
 #         'PASSWORD': 'Sebas123456',
 #         'HOST': 'localhost',  # O la dirección IP de tu servidor PostgreSQL
 #         'PORT': '5432',       # El puerto predeterminado de PostgreSQL es 5432
-#     }s
+#     }
 # }
 
 database_url=os.environ.get("DATABASE_URL")

@@ -17,6 +17,8 @@ class NPK_Teoricos(models.Model):
     V_teo_2 = models.FloatField(null=True, blank=True)
     V_teo_3 = models.FloatField(null=True, blank=True)
     Valid=models.BooleanField(default=True)
+    #Las modificaciones
+    
 
     class Meta:
         app_label = 'Api_Sensor'
